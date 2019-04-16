@@ -1,41 +1,12 @@
-const indexCollection = function(db, callback) {
-  db.collection('documents').createIndex(
-    { "a": 1 },
-      null,
-      function(err, results) {
-        console.log(results);
-        callback();
-    }
-  );
-};
+var express = require('express');
+var http = require('http');
+var app = express();
 
-const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
+app.get('/index.html', function(req, res){
+	res.writeHead(200, {'Content-Type':'text/html'});
+	res.write('<head><meta charset="utf-8"></head>');
 
-// Connection URL
-const url = 'mongodb://localhost:27017';
-
-// Database Name
-const dbName = 'myproject';
-
-// Create a new MongoClient
-const client = new MongoClient(url,{ useNewUrlParser: true });
-
-// Use connect method to connect to the Server
-client.connect(function(err) {
-  assert.equal(null, err);
-  console.log("Connected successfully to server");
-
-  const db = client.db(dbName);
-
-   indexCollection(db, function() {
-      client.close();
-    });
-
-  //insertDocuments(db, function() {
-  //  client.close();
-  //});
-
-
-  //client.close();
+	res.write('<p>Here run in Express!</p>');
 });
+
+app.listen(3000,"192.168.208.139");
