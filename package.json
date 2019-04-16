@@ -1,0 +1,29 @@
+{
+  "name": "tax_calendar",
+  "version": "1.0.0",
+  "description": "Use for notify tax deadline",
+  "main": "main.js",
+  "scripts": {
+    "test": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ytljc2003/tax_calendar.git"
+  },
+  "keywords": [
+    "tax",
+    "calendar",
+    "notify",
+    "deadline"
+  ],
+  "author": "ytljc2003",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ytljc2003/tax_calendar/issues"
+  },
+  "homepage": "https://github.com/ytljc2003/tax_calendar#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongodb": "^3.2.3"
+  }
+}
