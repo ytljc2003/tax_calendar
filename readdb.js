@@ -1,41 +1,53 @@
-const indexCollection = function(db, callback) {
-  db.collection('documents').createIndex(
-    { "a": 1 },
-      null,
-      function(err, results) {
-        console.log(results);
-        callback();
-    }
-  );
-};
+findDocuments = function(db, callback) {
+  // Get the documents collection
+  const collection = db.collection('documents');
 
-const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
+  // Find some documents
+  collection.find({a:1},{_id: 1, 'a': 0}).toArray(function(err, docs) {
+    //console.log(err);
+    //assert.equal(null,err);
+    //console.log("Found the following records");
+    //console.log(docs)
+    callback(docs);
+  });
+}
 
-// Connection URL
-const url = 'mongodb://localhost:27017';
+readdb = function(){
+	const MongoClient = require('mongodb').MongoClient;
+	const assert = require('assert');
 
-// Database Name
-const dbName = 'myproject';
+	// Connection URL
+	const url = 'mongodb://localhost:27017';
 
-// Create a new MongoClient
-const client = new MongoClient(url,{ useNewUrlParser: true });
+	// Database Name
+	const dbName = 'myproject';
 
-// Use connect method to connect to the Server
-client.connect(function(err) {
-  assert.equal(null, err);
-  console.log("Connected successfully to server");
+	// Create a new MongoClient
+	const client = new MongoClient(url,{ useNewUrlParser: true });
 
-  const db = client.db(dbName);
+	// Use connect method to connect to the Server
+	client.connect(function(err) {
+  		assert.equal(null, err);
+  		console.log("Connected successfully to server");
 
-   indexCollection(db, function() {
-      client.close();
-    });
+  		const db = client.db(dbName);
 
-  //insertDocuments(db, function() {
-  //  client.close();
-  //});
+   		findDocuments(db, function(result) {
+			//console.log(result);
+      			client.close();
+			return result;
+    		});
 
+	});
+}
 
-  //client.close();
-});
+exports.Readdb = function(){
+	var result;
+
+	return function()
+	{
+		return readdb();
+	}
+}
+
+//readdb();
